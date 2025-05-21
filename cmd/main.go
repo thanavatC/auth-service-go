@@ -1,7 +1,6 @@
 package main
 
 import (
-	"fmt"
 	"log"
 
 	"github.com/SPVJ/fs-common-lib/core/db"
@@ -9,12 +8,9 @@ import (
 	"github.com/spf13/viper"
 	"github.com/thanavatC/auth-service-go/config"
 	"github.com/thanavatC/auth-service-go/controller"
-	"github.com/thanavatC/auth-service-go/model"
 	"github.com/thanavatC/auth-service-go/repository"
 	"github.com/thanavatC/auth-service-go/router"
 	"github.com/thanavatC/auth-service-go/service"
-	"gorm.io/driver/postgres"
-	"gorm.io/gorm"
 )
 
 func main() {
@@ -50,27 +46,4 @@ func main() {
 	if err := r.Run(":" + port); err != nil {
 		log.Fatalf("Failed to start server: %v", err)
 	}
-}
-
-func initDB() (*gorm.DB, error) {
-	dsn := fmt.Sprintf("host=%s port=%d user=%s password=%s dbname=%s sslmode=%s",
-		viper.GetString("database.host"),
-		viper.GetInt("database.port"),
-		viper.GetString("database.user"),
-		viper.GetString("database.password"),
-		viper.GetString("database.dbname"),
-		viper.GetString("database.sslmode"),
-	)
-
-	db, err := gorm.Open(postgres.Open(dsn), &gorm.Config{})
-	if err != nil {
-		return nil, err
-	}
-
-	// Auto migrate the schema
-	if err := db.AutoMigrate(&model.User{}); err != nil {
-		return nil, err
-	}
-
-	return db, nil
 }
