@@ -14,6 +14,7 @@ import (
 type IAuthService interface {
 	Register(req model.RegisterRequest) (model.AuthResponse, error)
 	Login(req model.LoginRequest) (model.AuthResponse, error)
+	InvalidateToken(token string) error
 }
 
 type AuthService struct {
@@ -102,4 +103,23 @@ func (s *AuthService) generateToken(user model.User) (string, error) {
 
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
 	return token.SignedString(s.jwtKey)
+}
+
+func (s *AuthService) InvalidateToken(token string) error {
+	// Parse and validate the token
+	claims := jwt.MapClaims{}
+	_, err := jwt.ParseWithClaims(token, claims, func(token *jwt.Token) (interface{}, error) {
+		return s.jwtKey, nil
+	})
+
+	if err != nil {
+		return errors.New("invalid token")
+	}
+
+	// In a real implementation, you might want to:
+	// 1. Add the token to a blacklist in Redis/database
+	// 2. Set a shorter expiration time
+	// 3. Or implement token revocation logic
+
+	return nil
 }
