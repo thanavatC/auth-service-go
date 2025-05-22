@@ -7,15 +7,15 @@ import (
 )
 
 type User struct {
-	ID        string         `json:"id" gorm:"primaryKey"`
-	Email     string         `json:"email" gorm:"unique;not null"`
-	Password  string         `json:"-" gorm:"not null"` // "-" means this field won't be included in JSON
-	FirstName string         `json:"firstName"`
-	LastName  string         `json:"lastName"`
-	Role      string         `json:"role" gorm:"default:'user'"`
-	CreatedAt time.Time      `json:"createdAt"`
-	UpdatedAt time.Time      `json:"updatedAt"`
-	DeletedAt gorm.DeletedAt `json:"-" gorm:"index"`
+	ID        string         `json:"id" gorm:"column:id;primary_key"`
+	Email     string         `json:"email" gorm:"column:email;unique;not null"`
+	Password  string         `json:"-" gorm:"column:password;not null"` // "-" means this field won't be included in JSON
+	FirstName string         `json:"firstName" gorm:"column:first_name"`
+	LastName  string         `json:"lastName" gorm:"column:last_name"`
+	Role      string         `json:"role" gorm:"column:role;default:'user'"`
+	CreatedAt time.Time      `json:"createdAt" gorm:"column:created_at"`
+	UpdatedAt time.Time      `json:"updatedAt" gorm:"column:updated_at"`
+	DeletedAt gorm.DeletedAt `json:"-" gorm:"column:deleted_at;index"`
 }
 
 type LoginRequest struct {
