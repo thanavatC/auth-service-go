@@ -8,6 +8,7 @@ import (
 	"github.com/spf13/viper"
 	"github.com/thanavatC/auth-service-go/config"
 	"github.com/thanavatC/auth-service-go/controller"
+	"github.com/thanavatC/auth-service-go/model"
 	"github.com/thanavatC/auth-service-go/repository"
 	"github.com/thanavatC/auth-service-go/router"
 	"github.com/thanavatC/auth-service-go/service"
@@ -15,16 +16,19 @@ import (
 
 func main() {
 	// Initialize configuration
-	viper.SetConfigName("config")
-	viper.SetConfigType("yaml")
-	viper.AddConfigPath("./config")
-
-	if err := viper.ReadInConfig(); err != nil {
-		log.Fatalf("Error reading config file: %s", err)
+	if err := config.LoadConfig(""); err != nil {
+		log.Fatalf("Error loading config: %v", err)
 	}
 
 	// Initialize database
 	db := db.New(config.AppConfig.Database)
+	if err := db.AutoMigrate(&model.User{}); err != nil {
+		log.Fatalf("Failed to migrate database: %v", err)
+	}
+
+	if db == nil {
+		log.Fatal("Failed to initialize database connection")
+	}
 
 	// Initialize components
 	userRepo := repository.NewUserRepository(db)

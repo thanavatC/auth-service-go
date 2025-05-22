@@ -106,9 +106,18 @@ func (s *AuthService) generateToken(user model.User) (string, error) {
 }
 
 func (s *AuthService) InvalidateToken(token string) error {
+	// Remove "Bearer " prefix if present
+	if len(token) > 7 && token[:7] == "Bearer " {
+		token = token[7:]
+	}
+
 	// Parse and validate the token
 	claims := jwt.MapClaims{}
 	_, err := jwt.ParseWithClaims(token, claims, func(token *jwt.Token) (interface{}, error) {
+		// Validate signing method
+		if _, ok := token.Method.(*jwt.SigningMethodHMAC); !ok {
+			return nil, errors.New("unexpected signing method")
+		}
 		return s.jwtKey, nil
 	})
 
@@ -116,10 +125,9 @@ func (s *AuthService) InvalidateToken(token string) error {
 		return errors.New("invalid token")
 	}
 
-	// In a real implementation, you might want to:
-	// 1. Add the token to a blacklist in Redis/database
-	// 2. Set a shorter expiration time
-	// 3. Or implement token revocation logic
+	// Add the token to a blacklist in Redis/database
+	// Set a shorter expiration time
+	// Or implement token revocation logic
 
 	return nil
 }

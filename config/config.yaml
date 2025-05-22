@@ -1,14 +1,12 @@
 server:
-  port: "8080"
-
+  isProductionMode: false
 database:
-  host: "localhost"
+  host: localhost
   port: 5432
-  user: "postgres"
-  password: "postgres"
-  dbname: "auth_service"
-  sslmode: "disable"
-
-jwt:
-  secret: "your-secret-key"
-  expiration: 24h # 24 hours
+  dbname: auth_service
+  username: postgres
+  password: postgres
+  sslmode: disable
+  timezone: Asia/Bangkok
+  schema: public
+  gormlogenable: true
