@@ -1,5 +1,5 @@
-github.com/SPVJ/fs-common-lib v0.0.0-20250521060021-6be931e9b167 h1:MiqrCDYgcJ/ZdfNr5XOFwIa2oADh6rLA1ZJsgG8IeAU=
-github.com/SPVJ/fs-common-lib v0.0.0-20250521060021-6be931e9b167/go.mod h1:FmTXccGR0KOaSku550g0znH1W0Q36LvbsUw+6v217c0=
+github.com/SPVJ/fs-common-lib v1.0.2 h1:+lZr966MrJtCtmVy1onkKLm1D8hgzmOimaHuyrVYfuk=
+github.com/SPVJ/fs-common-lib v1.0.2/go.mod h1:rUHzv8pZYyK8bLhtqSXrAnDo49kx19lC3c8tlyAny18=
 github.com/bytedance/sonic v1.11.6 h1:oUp34TzMlL+OY1OUWxHqsdkgC/Zfc85zGqw9siXjrc0=
 github.com/bytedance/sonic v1.11.6/go.mod h1:LysEHSvpvDySVdC2f87zGWf6CIKJcAvqab1ZaiQtds4=
 github.com/bytedance/sonic/loader v0.1.1 h1:c+e5Pt1k/cy5wMveRDyk2X4B9hF4g7an8N3zCYjJFNM=
